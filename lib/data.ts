@@ -1,137 +1,109 @@
+// lib/data.ts
 import { format, addDays } from 'date-fns';
 
-// Define interfaces for TypeScript
-interface ChemicalProfile {
-  molecularWeight: string;
-  purity: string;
-  form: string;
-  stability: string;
-}
+export const programs: Array<{
+  id: number;
+  therapeuticArea: string;
+  programName: string;
+  status: string;
+  criticality: string;
+  suppliers: Array<{
+    name: string;
+    materials: string[];
+  }>;
+}> = [
+  {
+    id: 1,
+    therapeuticArea: 'Central Nervous System (CNS)',
+    programName: 'RD20',
+    status: 'Active',
+    criticality: 'High',
+    suppliers: [
+      {
+        name: 'CDMO Alpha',
+        materials: ['Chromatography Resins', 'Cell Culture Media'],
+      },
+      {
+        name: 'BioProcess Solutions',
+        materials: ['Monoclonal Antibodies'],
+      },
+    ],
+  },
+  {
+    id: 2,
+    therapeuticArea: 'Central Nervous System (CNS)',
+    programName: 'CNS-45',
+    status: 'Inactive',
+    criticality: 'Low',
+    suppliers: [
+      {
+        name: 'AsiaPharma Tech',
+        materials: ['Cell Culture Media'],
+      },
+    ],
+  },
+  {
+    id: 3,
+    therapeuticArea: 'Oncology',
+    programName: 'ONC-15',
+    status: 'Completed',
+    criticality: 'Medium',
+    suppliers: [
+      {
+        name: 'Nordic Biotech',
+        materials: ['PCR Master Mix'],
+      },
+      {
+        name: 'LatAm Pharmaceuticals',
+        materials: ['Cell Culture Media'],
+      },
+    ],
+  },
+  {
+    id: 4,
+    therapeuticArea: 'Immunology',
+    programName: 'IMM-30',
+    status: 'Active',
+    criticality: 'Medium',
+    suppliers: [
+      {
+        name: 'CDMO Alpha',
+        materials: ['PG-Seq Indexing Primers'],
+      },
+      {
+        name: 'BioProcess Solutions',
+        materials: ['Monoclonal Antibodies', 'PCR Master Mix'],
+      },
+    ],
+  },
+];
 
-interface Manufacturing {
-  process?: string;
-  quality?: string;
-  batchSize?: string;
-  capabilities?: string;
-  capacities?: string;
-}
-
-interface SupplyRisk {
-  level: string;
-  factors: string[];
-  mitigation: string;
-}
-
-interface Contract {
-  length: string;
-  expiry: string;
-  terms: string;
-  exclusivity: string;
-  qualityMetrics: string;
-}
-
-interface Geopolitical {
-  region: string;
-  tradeAgreements: string[];
-  politicalStability: string;
-  logisticsRisk: string;
-  additionalRisk?: string;
-}
-
-interface Financial {
-  rating: string;
-  marketCap: string;
-  revenue: string;
-}
-
-interface ESG {
-  environmentalScore: number;
-  socialScore: number;
-  governanceScore: number;
-  certifications: string[];
-}
-
-interface Profile {
-  background: string;
-  generalInfo: string;
-}
-
-interface GeographicPresence {
-  locations: string[];
-  infrastructure: string;
-}
-
-interface Quality {
-  compliance: string[];
-  qualitySystems: string;
-  auditHistory: string;
-  certifications: string[];
-}
-
-interface Pricing {
-  structures: string;
-  paymentTerms: string;
-  financialStability: string;
-  negotiationLevers: string;
-  costTransparency: string;
-}
-
-interface SupplierDetail {
-  name: string;
-  materials: string[];
-}
-
-interface Material {
+export const materials: Array<{
   id: number;
   name: string;
   cas: string;
   grade: string;
   price: string;
   leadTime: string;
-  chemicalProfile: ChemicalProfile;
-  manufacturing: Manufacturing;
-  supplyRisk: SupplyRisk;
+  chemicalProfile: {
+    molecularWeight: string;
+    purity: string;
+    form: string;
+    stability: string;
+  };
+  manufacturing: {
+    process: string;
+    quality: string;
+    batchSize: string;
+  };
+  supplyRisk: {
+    level: string;
+    factors: string[];
+    mitigation: string;
+  };
   substitutes: string[];
   suppliers: string[];
-}
-
-interface Supplier {
-  id: number;
-  name: string;
-  region: string;
-  contract: Contract;
-  capacity: string;
-  compliance: string[];
-  riskRating: string;
-  geopolitical: Geopolitical;
-  financial: Financial;
-  esg: ESG;
-  alternateProducts: string[];
-  riskAlerts: string[];
-  profile?: Profile;
-  manufacturing?: Manufacturing;
-  geographicPresence?: GeographicPresence;
-  quality?: Quality;
-  pricing?: Pricing;
-}
-
-interface Program {
-  id: number;
-  therapeuticArea: string;
-  programName: string;
-  status: string;
-  criticality: string;
-  suppliers: SupplierDetail[];
-}
-
-// Mock data
-export const alerts = [
-  { id: 1, type: 'contract', message: 'Supplier A contract expires in 30 days', severity: 'high' },
-  { id: 2, type: 'risk', message: 'New trade restrictions in Region B', severity: 'medium' },
-  { id: 3, type: 'supply', message: 'Material X stock below threshold', severity: 'low' },
-];
-
-export const materials: Material[] = [
+}> = [
   {
     id: 1,
     name: 'PG-Seq Indexing Primers',
@@ -160,66 +132,177 @@ export const materials: Material[] = [
   },
   {
     id: 2,
-    name: 'Chromatography Resins',
+    name: 'Monoclonal Antibodies',
     cas: '789-01-2',
-    grade: 'Industrial-grade',
-    price: '$300/unit',
-    leadTime: '10-15 days',
+    grade: 'Research-grade',
+    price: '$2000/unit',
+    leadTime: '30-45 days',
     chemicalProfile: {
-      molecularWeight: '5,000-10,000 g/mol',
+      molecularWeight: '150,000 g/mol',
       purity: '≥95%',
-      form: 'Beaded resin',
-      stability: 'Stable at 4°C for 18 months',
+      form: 'Liquid solution',
+      stability: 'Stable at 4°C for 12 months',
     },
     manufacturing: {
-      process: 'Polymerization',
-      quality: 'ISO certified',
-      batchSize: '500-1000 units',
+      process: 'Cell culture and purification',
+      quality: 'ISO 9001 certified',
+      batchSize: '50-200 units',
     },
     supplyRisk: {
       level: 'Low',
-      factors: ['Stable supply chain'],
-      mitigation: 'Regular inventory checks',
+      factors: ['Multiple manufacturers', 'Established process'],
+      mitigation: 'Regular quality audits',
     },
-    substitutes: ['Alternative Resins (90% comparable)'],
-    suppliers: ['Supplier D', 'Supplier E'],
+    substitutes: ['Polyclonal antibodies (75% comparable)', 'Synthetic alternatives (60% comparable)'],
+    suppliers: ['Supplier B', 'Supplier D'],
   },
   {
     id: 3,
-    name: 'Cell Culture Media',
+    name: 'Chromatography Resins',
     cas: '456-78-9',
-    grade: 'Research-grade',
-    price: '$200/unit',
-    leadTime: '7-10 days',
+    grade: 'Analytical-grade',
+    price: '$1500/unit',
+    leadTime: '21-28 days',
     chemicalProfile: {
       molecularWeight: 'Variable',
       purity: '≥99%',
-      form: 'Liquid',
-      stability: 'Stable at 2-8°C for 12 months',
+      form: 'Beaded matrix',
+      stability: 'Stable at room temperature',
     },
     manufacturing: {
-      process: 'Fermentation',
-      quality: 'GMP compliant',
-      batchSize: '1000-2000 units',
+      process: 'Polymer synthesis and functionalization',
+      quality: 'USP certified',
+      batchSize: '200-1000 units',
     },
     supplyRisk: {
       level: 'High',
-      factors: ['Raw material shortages', 'Geopolitical instability'],
-      mitigation: 'Diversified supplier base',
+      factors: ['Raw material shortages', 'Complex manufacturing'],
+      mitigation: 'Strategic stockpiling',
     },
-    substitutes: ['Synthetic Media (80% comparable)'],
-    suppliers: ['Supplier F', 'Supplier G'],
+    substitutes: ['Alternative resins (90% comparable)', 'Membrane technologies (65% comparable)'],
+    suppliers: ['Supplier A', 'Supplier E'],
+  },
+  {
+    id: 4,
+    name: 'PCR Master Mix',
+    cas: '234-56-7',
+    grade: 'Molecular biology-grade',
+    price: '$300/unit',
+    leadTime: '7-10 days',
+    chemicalProfile: {
+      molecularWeight: 'N/A',
+      purity: '≥99%',
+      form: 'Solution',
+      stability: 'Stable at -20°C for 18 months',
+    },
+    manufacturing: {
+      process: 'Enzyme production and formulation',
+      quality: 'ISO 13485 certified',
+      batchSize: '500-2000 units',
+    },
+    supplyRisk: {
+      level: 'Low',
+      factors: ['Multiple suppliers', 'Standard formulation'],
+      mitigation: 'Regular supplier audits',
+    },
+    substitutes: ['Individual PCR components (95% comparable)', 'Alternative enzyme blends (80% comparable)'],
+    suppliers: ['Supplier C', 'Supplier D', 'Supplier E'],
+  },
+  {
+    id: 5,
+    name: 'Cell Culture Media',
+    cas: '345-67-8',
+    grade: 'Cell culture-grade',
+    price: '$800/unit',
+    leadTime: '14-21 days',
+    chemicalProfile: {
+      molecularWeight: 'N/A',
+      purity: 'Sterile',
+      form: 'Liquid',
+      stability: 'Stable at 4°C for 6 months',
+    },
+    manufacturing: {
+      process: 'Aseptic formulation',
+      quality: 'GMP certified',
+      batchSize: '300-1500 units',
+    },
+    supplyRisk: {
+      level: 'Medium',
+      factors: ['Component availability', 'Sterility requirements'],
+      mitigation: 'Backup supplier network',
+    },
+    substitutes: ['Serum-free alternatives (85% comparable)', 'Chemically defined media (75% comparable)'],
+    suppliers: ['Supplier B', 'Supplier D'],
   },
 ];
 
-export const suppliers: Supplier[] = [
+export const suppliers: Array<{
+  id: number;
+  name: string;
+  region: string;
+  contract: {
+    length: string;
+    expiry: string;
+    terms: string;
+    exclusivity: string;
+    qualityMetrics: string;
+  };
+  capacity: string;
+  compliance: string[];
+  riskRating: string;
+  geopolitical: {
+    region: string;
+    tradeAgreements: string[];
+    politicalStability: string;
+    logisticsRisk: string;
+    additionalRisk?: string;
+  };
+  financial: {
+    rating: string;
+    marketCap: string;
+    revenue: string;
+  };
+  esg: {
+    environmentalScore: number;
+    socialScore: number;
+    governanceScore: number;
+    certifications: string[];
+  };
+  alternateProducts: string[];
+  riskAlerts: string[];
+  profile: {
+    background: string;
+    generalInfo: string;
+  };
+  manufacturing: {
+    capabilities: string;
+    capacities: string;
+  };
+  geographicPresence: {
+    locations: string[];
+    infrastructure: string;
+  };
+  quality: {
+    compliance: string[];
+    qualitySystems: string;
+    auditHistory: string;
+    certifications: string[];
+  };
+  pricing: {
+    structures: string;
+    paymentTerms: string;
+    financialStability: string;
+    negotiationLevers: string;
+    costTransparency: string;
+  };
+}> = [
   {
     id: 1,
     name: 'CDMO Alpha',
     region: 'North America',
     contract: {
       length: '2-year contract',
-      expiry: format(addDays(new Date(), 120), 'MMM dd, yyyy'),
+      expiry: format(addDays(new Date('2025-04-09'), 120), 'MMM dd, yyyy'),
       terms: 'Net 60, Volume-based pricing',
       exclusivity: 'Non-exclusive',
       qualityMetrics: '98% acceptance rate required',
@@ -246,8 +329,8 @@ export const suppliers: Supplier[] = [
     },
     alternateProducts: ['Chromatography Resins', 'Cell Culture Media', 'Filtration Systems'],
     riskAlerts: [
-      'Minor supply chain disruption expected Q3 2025',
-      'Planned facility maintenance in August 2025',
+      'Minor supply chain disruption expected Q3 2024',
+      'Planned facility maintenance in August 2024',
     ],
     profile: {
       background: 'Founded in 1995, CDMO Alpha specializes in biopharmaceutical manufacturing.',
@@ -264,7 +347,7 @@ export const suppliers: Supplier[] = [
     quality: {
       compliance: ['ISO 9001', 'GMP', 'FDA registered'],
       qualitySystems: 'Six Sigma, real-time quality monitoring.',
-      auditHistory: 'Last audit: Q1 2025, no major findings.',
+      auditHistory: 'Last audit: Q1 2024, no major findings.',
       certifications: ['ISO 14001', 'Carbon Neutral'],
     },
     pricing: {
@@ -280,59 +363,61 @@ export const suppliers: Supplier[] = [
     name: 'BioProcess Solutions',
     region: 'Europe',
     contract: {
-      length: '1-year contract',
-      expiry: format(addDays(new Date(), 90), 'MMM dd, yyyy'),
-      terms: 'Net 30, Fixed pricing',
-      exclusivity: 'Exclusive',
-      qualityMetrics: '95% acceptance rate required',
+      length: '3-year contract',
+      expiry: format(addDays(new Date('2025-04-09'), 450), 'MMM dd, yyyy'),
+      terms: 'Net 45, Fixed pricing',
+      exclusivity: 'Semi-exclusive for certain products',
+      qualityMetrics: '99% acceptance rate required',
     },
-    capacity: '150 batch runs annually',
-    compliance: ['ISO 9001', 'EU GMP'],
-    riskRating: 'Medium',
+    capacity: '150+ batch runs annually',
+    compliance: ['ISO 9001', 'GMP', 'EMA certified'],
+    riskRating: 'Low',
     geopolitical: {
-      region: 'Moderately stable',
-      tradeAgreements: ['EU-UK Trade Agreement'],
-      politicalStability: 'Moderate',
-      logisticsRisk: 'Medium',
-      additionalRisk: 'Brexit-related delays',
+      region: 'Stable',
+      tradeAgreements: ['EU', 'UK-EU TCA'],
+      politicalStability: 'High',
+      logisticsRisk: 'Low',
     },
     financial: {
       rating: 'A',
       marketCap: '$1.8B',
-      revenue: '$400M annually',
+      revenue: '$350M annually',
     },
     esg: {
-      environmentalScore: 80,
-      socialScore: 75,
+      environmentalScore: 90,
+      socialScore: 85,
       governanceScore: 88,
-      certifications: ['ISO 14001'],
+      certifications: ['ISO 14001', 'EMAS'],
     },
-    alternateProducts: ['Monoclonal Antibodies', 'Buffers'],
-    riskAlerts: ['Potential regulatory changes in Q4 2025'],
+    alternateProducts: ['Monoclonal Antibodies', 'PCR Reagents', 'Purification Systems'],
+    riskAlerts: [
+      'Regulatory changes expected in Q4 2024',
+      'Investment in new production line ongoing',
+    ],
     profile: {
-      background: 'Established in 2000, specializing in biologics production.',
-      generalInfo: 'Operates 2 facilities with 800 employees.',
+      background: 'Established in 2000, BioProcess Solutions focuses on biologics production.',
+      generalInfo: '700 employees, expertise in monoclonal antibodies and reagents.',
     },
     manufacturing: {
-      capabilities: 'Bioreactor production, purification.',
-      capacities: 'Up to 300L bioreactors.',
+      capabilities: 'Cell culture, purification, and reagent formulation.',
+      capacities: 'Up to 300L bioreactors, 150+ batch runs annually.',
     },
     geographicPresence: {
-      locations: ['Germany (HQ)', 'France'],
-      infrastructure: '2 manufacturing plants.',
+      locations: ['Germany (HQ)', 'France', 'UK'],
+      infrastructure: '2 manufacturing sites, 1 R&D center.',
     },
     quality: {
-      compliance: ['ISO 9001', 'EU GMP'],
-      qualitySystems: 'Lean manufacturing, quality audits.',
-      auditHistory: 'Last audit: Q2 2025, minor findings.',
-      certifications: ['ISO 14001'],
+      compliance: ['ISO 9001', 'GMP', 'EMA certified'],
+      qualitySystems: 'Lean manufacturing, automated QC.',
+      auditHistory: 'Last audit: Q3 2023, minor findings resolved.',
+      certifications: ['ISO 14001', 'EMAS'],
     },
     pricing: {
-      structures: 'Contract pricing only.',
-      paymentTerms: 'Net 30 days.',
-      financialStability: 'A rating, steady growth.',
-      negotiationLevers: 'Long-term commitments.',
-      costTransparency: 'Quarterly reports.',
+      structures: 'Fixed pricing under contract, spot pricing available.',
+      paymentTerms: 'Net 45 days, flexible for large orders.',
+      financialStability: 'A rating, strong revenue growth.',
+      negotiationLevers: 'Long-term commitments, quality guarantees.',
+      costTransparency: 'Annual cost reports provided.',
     },
   },
   {
@@ -340,109 +425,318 @@ export const suppliers: Supplier[] = [
     name: 'AsiaPharma Tech',
     region: 'Asia Pacific',
     contract: {
-      length: '3-year contract',
-      expiry: format(addDays(new Date(), 180), 'MMM dd, yyyy'),
-      terms: 'Net 90, Tiered pricing',
+      length: '1-year contract',
+      expiry: format(addDays(new Date('2025-04-09'), 180), 'MMM dd, yyyy'),
+      terms: 'Net 30, Variable pricing',
       exclusivity: 'Non-exclusive',
       qualityMetrics: '97% acceptance rate required',
     },
-    capacity: '300 batch runs annually',
-    compliance: ['ISO 9001', 'GMP'],
-    riskRating: 'High',
+    capacity: '300+ batch runs annually',
+    compliance: ['ISO 9001', 'GMP', 'PMDA certified'],
+    riskRating: 'Medium',
     geopolitical: {
-      region: 'Unstable',
-      tradeAgreements: ['RCEP'],
-      politicalStability: 'Low',
-      logisticsRisk: 'High',
-      additionalRisk: 'Trade tensions with US',
+      region: 'Moderate stability',
+      tradeAgreements: ['RCEP', 'CPTPP'],
+      politicalStability: 'Medium',
+      logisticsRisk: 'Medium',
     },
     financial: {
-      rating: 'BBB',
-      marketCap: '$1.2B',
-      revenue: '$300M annually',
+      rating: 'BBB+',
+      marketCap: '$900M',
+      revenue: '$200M annually',
     },
     esg: {
-      environmentalScore: 70,
-      socialScore: 65,
-      governanceScore: 80,
+      environmentalScore: 75,
+      socialScore: 80,
+      governanceScore: 82,
       certifications: ['ISO 14001'],
     },
-    alternateProducts: ['API Intermediates', 'Excipients'],
-    riskAlerts: ['Port congestion delays expected in Q3 2025'],
+    alternateProducts: ['Cell Culture Media', 'Laboratory Plastics', 'Basic Chemicals'],
+    riskAlerts: [
+      'Port congestion affecting shipment times',
+      'Expansion into new product lines planned',
+    ],
     profile: {
-      background: 'Founded in 2010, focuses on API manufacturing.',
-      generalInfo: 'Employs 500 staff across 2 facilities.',
+      background: 'Started in 2010, AsiaPharma Tech excels in cost-effective production.',
+      generalInfo: '500 employees, serving APAC markets primarily.',
     },
     manufacturing: {
-      capabilities: 'Chemical synthesis, API production.',
-      capacities: 'Up to 400L reactors.',
+      capabilities: 'High-volume synthesis, plastics molding.',
+      capacities: 'Up to 1,000L reactors, 300+ batch runs annually.',
     },
     geographicPresence: {
-      locations: ['China (HQ)', 'India'],
-      infrastructure: '2 production sites.',
+      locations: ['China (HQ)', 'Japan', 'Singapore'],
+      infrastructure: '4 production facilities, 1 logistics hub.',
     },
     quality: {
-      compliance: ['ISO 9001', 'GMP'],
-      qualitySystems: 'Quality control testing.',
-      auditHistory: 'Last audit: Q4 2024, major findings.',
+      compliance: ['ISO 9001', 'GMP', 'PMDA certified'],
+      qualitySystems: 'Batch tracking, statistical process control.',
+      auditHistory: 'Last audit: Q2 2024, compliance confirmed.',
       certifications: ['ISO 14001'],
     },
     pricing: {
-      structures: 'Tiered pricing based on volume.',
-      paymentTerms: 'Net 90 days.',
-      financialStability: 'BBB rating, volatile.',
-      negotiationLevers: 'Bulk discounts.',
-      costTransparency: 'Limited transparency.',
+      structures: 'Variable pricing based on market rates, contract options.',
+      paymentTerms: 'Net 30 days, adjustable for volume.',
+      financialStability: 'BBB+ rating, moderate debt levels.',
+      negotiationLevers: 'Bulk order discounts, flexible terms.',
+      costTransparency: 'Monthly pricing updates shared.',
+    },
+  },
+  {
+    id: 4,
+    name: 'Nordic Biotech',
+    region: 'Northern Europe',
+    contract: {
+      length: '2-year contract',
+      expiry: format(addDays(new Date('2025-04-09'), 300), 'MMM dd, yyyy'),
+      terms: 'Net 60, Tiered pricing',
+      exclusivity: 'Exclusive for specific regions',
+      qualityMetrics: '99.5% acceptance rate required',
+    },
+    capacity: '100+ batch runs annually',
+    compliance: ['ISO 9001', 'GMP', 'Nordic Swan Ecolabel'],
+    riskRating: 'Low',
+    geopolitical: {
+      region: 'Very stable',
+      tradeAgreements: ['EU', 'EEA'],
+      politicalStability: 'Very High',
+      logisticsRisk: 'Low',
+    },
+    financial: {
+      rating: 'AA-',
+      marketCap: '$1.2B',
+      revenue: '$250M annually',
+    },
+    esg: {
+      environmentalScore: 95,
+      socialScore: 92,
+      governanceScore: 94,
+      certifications: ['ISO 14001', 'B Corp'],
+    },
+    alternateProducts: ['Enzyme Products', 'Diagnostic Reagents', 'Research Antibodies'],
+    riskAlerts: [
+      'Implementing new quality management system',
+      'R&D collaboration with universities ongoing',
+    ],
+    profile: {
+      background: 'Founded in 1985, Nordic Biotech leads in sustainable biotech solutions.',
+      generalInfo: '300 employees, strong focus on R&D and diagnostics.',
+    },
+    manufacturing: {
+      capabilities: 'Enzyme production, diagnostic reagent synthesis.',
+      capacities: 'Up to 200L bioreactors, 100+ batch runs annually.',
+    },
+    geographicPresence: {
+      locations: ['Sweden (HQ)', 'Denmark', 'Norway'],
+      infrastructure: '1 manufacturing plant, 1 R&D lab.',
+    },
+    quality: {
+      compliance: ['ISO 9001', 'GMP', 'Nordic Swan Ecolabel'],
+      qualitySystems: 'Continuous improvement, ISO 13485 processes.',
+      auditHistory: 'Last audit: Q4 2023, exemplary results.',
+      certifications: ['ISO 14001', 'B Corp'],
+    },
+    pricing: {
+      structures: 'Tiered pricing based on order size, exclusive contracts.',
+      paymentTerms: 'Net 60 days, incentives for sustainability goals.',
+      financialStability: 'AA- rating, robust financial health.',
+      negotiationLevers: 'Exclusivity agreements, R&D partnerships.',
+      costTransparency: 'Full transparency with tiered pricing details.',
+    },
+  },
+  {
+    id: 5,
+    name: 'LatAm Pharmaceuticals',
+    region: 'South America',
+    contract: {
+      length: '18-month contract',
+      expiry: format(addDays(new Date('2025-04-09'), 240), 'MMM dd, yyyy'),
+      terms: 'Net 45, Volume-based pricing',
+      exclusivity: 'Non-exclusive',
+      qualityMetrics: '96% acceptance rate required',
+    },
+    capacity: '150+ batch runs annually',
+    compliance: ['ISO 9001', 'GMP', 'ANVISA certified'],
+    riskRating: 'Medium',
+    geopolitical: {
+      region: 'Moderate stability',
+      tradeAgreements: ['Mercosur'],
+      politicalStability: 'Medium',
+      logisticsRisk: 'Medium',
+    },
+    financial: {
+      rating: 'BBB',
+      marketCap: '$600M',
+      revenue: '$150M annually',
+    },
+    esg: {
+      environmentalScore: 80,
+      socialScore: 85,
+      governanceScore: 78,
+      certifications: ['ISO 14001', 'Local sustainability certifications'],
+    },
+    alternateProducts: ['Generic APIs', 'Basic Chemicals', 'Laboratory Supplies'],
+    riskAlerts: [
+      'Currency fluctuation affecting pricing',
+      'New quality control procedures being implemented',
+    ],
+    profile: {
+      background: 'Launched in 2005, LatAm Pharmaceuticals serves regional markets.',
+      generalInfo: '400 employees, specializing in generic APIs and chemicals.',
+    },
+    manufacturing: {
+      capabilities: 'API synthesis, aseptic filling.',
+      capacities: 'Up to 400L reactors, 150+ batch runs annually.',
+    },
+    geographicPresence: {
+      locations: ['Brazil (HQ)', 'Argentina', 'Chile'],
+      infrastructure: '2 production sites, 1 distribution center.',
+    },
+    quality: {
+      compliance: ['ISO 9001', 'GMP', 'ANVISA certified'],
+      qualitySystems: 'HACCP, quality by design.',
+      auditHistory: 'Last audit: Q1 2024, minor corrective actions.',
+      certifications: ['ISO 14001', 'Local sustainability certifications'],
+    },
+    pricing: {
+      structures: 'Volume-based pricing, spot pricing for small batches.',
+      paymentTerms: 'Net 45 days, currency hedging available.',
+      financialStability: 'BBB rating, steady revenue.',
+      negotiationLevers: 'Regional exclusivity, bulk pricing.',
+      costTransparency: 'Quarterly cost reviews provided.',
+    },
+  },
+  {
+    id: 6,
+    name: 'Asymchem (China)',
+    region: 'Asia Pacific',
+    contract: {
+      length: '2-year contract',
+      expiry: format(addDays(new Date('2025-04-09'), 365), 'MMM dd, yyyy'),
+      terms: 'Net 30, Variable pricing',
+      exclusivity: 'Non-exclusive',
+      qualityMetrics: '98% acceptance rate required',
+    },
+    capacity: '250+ batch runs annually',
+    compliance: ['ISO 9001', 'GMP', 'CFDA certified'],
+    riskRating: 'High',
+    geopolitical: {
+      region: 'Moderate stability',
+      tradeAgreements: ['RCEP'],
+      politicalStability: 'Medium',
+      logisticsRisk: 'High',
+      additionalRisk: 'New Trump Tariffs',
+    },
+    financial: {
+      rating: 'A-',
+      marketCap: '$1.5B',
+      revenue: '$300M annually',
+    },
+    esg: {
+      environmentalScore: 78,
+      socialScore: 82,
+      governanceScore: 85,
+      certifications: ['ISO 14001'],
+    },
+    alternateProducts: ['APIs', 'Intermediates', 'Specialty Chemicals'],
+    riskAlerts: [
+      'New Trump Tariffs increasing costs starting Q2 2025',
+      'Port delays in Tianjin affecting shipments',
+    ],
+    profile: {
+      background: 'Founded in 1998, Asymchem specializes in API and intermediate production.',
+      generalInfo: '900 employees, known for custom synthesis and process development.',
+    },
+    manufacturing: {
+      capabilities: 'Custom synthesis, high-potency API production.',
+      capacities: 'Up to 600L reactors, 250+ batch runs annually.',
+    },
+    geographicPresence: {
+      locations: ['China (HQ)', 'USA (sales office)'],
+      infrastructure: '3 manufacturing plants, 1 R&D center.',
+    },
+    quality: {
+      compliance: ['ISO 9001', 'GMP', 'CFDA certified'],
+      qualitySystems: 'Real-time process monitoring, GMP audits.',
+      auditHistory: 'Last audit: Q3 2024, full compliance.',
+      certifications: ['ISO 14001'],
+    },
+    pricing: {
+      structures: 'Variable pricing due to tariff impacts, contract options.',
+      paymentTerms: 'Net 30 days, adjustments for tariff costs.',
+      financialStability: 'A- rating, solid cash reserves.',
+      negotiationLevers: 'Volume commitments, tariff mitigation strategies.',
+      costTransparency: 'Monthly tariff impact reports provided.',
+    },
+  },
+  {
+    id: 7,
+    name: 'WuXi AppTec (China)',
+    region: 'Asia Pacific',
+    contract: {
+      length: '3-year contract',
+      expiry: format(addDays(new Date('2025-04-09'), 730), 'MMM dd, yyyy'),
+      terms: 'Net 45, Tiered pricing',
+      exclusivity: 'Non-exclusive',
+      qualityMetrics: '97% acceptance rate required',
+    },
+    capacity: '400+ batch runs annually',
+    compliance: ['ISO 9001', 'GMP', 'FDA certified'],
+    riskRating: 'High',
+    geopolitical: {
+      region: 'Moderate stability',
+      tradeAgreements: ['RCEP'],
+      politicalStability: 'Medium',
+      logisticsRisk: 'High',
+      additionalRisk: 'New Trump Tariffs',
+    },
+    financial: {
+      rating: 'A',
+      marketCap: '$3.2B',
+      revenue: '$700M annually',
+    },
+    esg: {
+      environmentalScore: 80,
+      socialScore: 83,
+      governanceScore: 87,
+      certifications: ['ISO 14001', 'Green Chemistry Award'],
+    },
+    alternateProducts: ['Biologics', 'Small Molecules', 'Analytical Services'],
+    riskAlerts: [
+      'New Trump Tariffs impacting export costs starting Q2 2025',
+      'Expansion of biologics facility planned for 2025',
+    ],
+    profile: {
+      background: 'Established in 2000, WuXi AppTec is a global leader in contract research and manufacturing.',
+      generalInfo: '2,500 employees, extensive biologics and small molecule expertise.',
+    },
+    manufacturing: {
+      capabilities: 'Biologics production, small molecule synthesis, analytical testing.',
+      capacities: 'Up to 1,200L bioreactors, 400+ batch runs annually.',
+    },
+    geographicPresence: {
+      locations: ['China (HQ)', 'USA', 'Germany'],
+      infrastructure: '5 manufacturing sites, 2 R&D centers.',
+    },
+    quality: {
+      compliance: ['ISO 9001', 'GMP', 'FDA certified'],
+      qualitySystems: 'Advanced analytics, continuous quality improvement.',
+      auditHistory: 'Last audit: Q2 2024, no major issues.',
+      certifications: ['ISO 14001', 'Green Chemistry Award'],
+    },
+    pricing: {
+      structures: 'Tiered pricing with tariff adjustments, spot pricing available.',
+      paymentTerms: 'Net 45 days, flexible for long-term partners.',
+      financialStability: 'A rating, strong revenue growth.',
+      negotiationLevers: 'Long-term contracts, diversified services.',
+      costTransparency: 'Quarterly financial impact reports shared.',
     },
   },
 ];
 
-export const programs: Program[] = [
-  {
-    id: 1,
-    therapeuticArea: 'Central Nervous System (CNS)',
-    programName: 'RD20',
-    status: 'Active',
-    criticality: 'High',
-    suppliers: [
-      {
-        name: 'CDMO Alpha',
-        materials: ['Chromatography Resins', 'Cell Culture Media'],
-      },
-      {
-        name: 'BioProcess Solutions',
-        materials: ['Monoclonal Antibodies'],
-      },
-    ],
-  },
-  {
-    id: 2,
-    therapeuticArea: 'Oncology',
-    programName: 'ONC45',
-    status: 'Inactive',
-    criticality: 'Low',
-    suppliers: [
-      {
-        name: 'AsiaPharma Tech',
-        materials: ['API Intermediates'],
-      },
-    ],
-  },
-  {
-    id: 3,
-    therapeuticArea: 'Cardiovascular',
-    programName: 'CV10',
-    status: 'Active',
-    criticality: 'Medium',
-    suppliers: [
-      {
-        name: 'CDMO Alpha',
-        materials: ['Excipients'],
-      },
-      {
-        name: 'BioProcess Solutions',
-        materials: ['Buffers'],
-      },
-    ],
-  },
+// Alerts data (optional, used in HomePage)
+export const alerts = [
+  { id: 1, type: 'contract', message: 'Supplier A contract expires in 30 days', severity: 'high' },
+  { id: 2, type: 'risk', message: 'New trade restrictions in Region B', severity: 'medium' },
+  { id: 3, type: 'supply', message: 'Material X stock below threshold', severity: 'low' },
 ];

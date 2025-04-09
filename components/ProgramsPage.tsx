@@ -1,4 +1,5 @@
 'use client';
+import React from 'react'; // Import React explicitly
 import { useState } from 'react';
 import { MessageSquare } from 'lucide-react';
 import { programs } from '@/lib/data';

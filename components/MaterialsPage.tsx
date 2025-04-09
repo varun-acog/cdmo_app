@@ -1,12 +1,17 @@
 'use client';
+import React from 'react';
 import { useState } from 'react';
 import { MessageSquare } from 'lucide-react';
 import DetailModal from './DetailModal';
 import { materials } from '@/lib/data';
 
 export default function MaterialsPage() {
-  const [selectedMaterial, setSelectedMaterial] = useState<null | (typeof materials)[0]>(null);
+  const [selectedMaterial, setSelectedMaterial] = useState<(typeof materials)[0] | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  if (!materials || materials.length === 0) {
+    return <div className="py-8 text-center">No materials data available.</div>;
+  }
 
   return (
     <div className="py-8">

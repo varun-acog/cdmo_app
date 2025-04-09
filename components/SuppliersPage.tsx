@@ -1,12 +1,17 @@
 'use client';
+import React from 'react';
 import { useState } from 'react';
 import { MessageSquare } from 'lucide-react';
 import DetailModal from './DetailModal';
 import { suppliers } from '@/lib/data';
 
 export default function SuppliersPage() {
-  const [selectedSupplier, setSelectedSupplier] = useState<null | (typeof suppliers)[0]>(null);
+  const [selectedSupplier, setSelectedSupplier] = useState<(typeof suppliers)[0] | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  if (!suppliers || suppliers.length === 0) {
+    return <div className="py-8 text-center">No suppliers data available.</div>;
+  }
 
   return (
     <div className="py-8">

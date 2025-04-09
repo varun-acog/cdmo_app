@@ -1,12 +1,8 @@
 'use client';
-import { useEffect } from 'react';
+import React from 'react'; // Ensure React is imported
 import Modal from 'react-modal'; // Ensure this import is present
 import { AlertTriangle } from 'lucide-react';
 
-// Set the app element globally (only on client side)
-if (typeof window !== 'undefined') {
-  Modal.setAppElement('#__next');
-}
 
 interface ChemicalProfile {
   molecularWeight: string;
