@@ -1,7 +1,6 @@
 'use client';
-import React from 'react'; // Import React explicitly
-import { useState } from 'react';
-import { MessageSquare } from 'lucide-react';
+import React, { useState } from 'react';
+import { MessageSquare, Flame, AlertTriangle, CheckCircle } from 'lucide-react';
 import { programs } from '@/lib/data';
 
 export default function ProgramsPage() {
@@ -9,7 +8,10 @@ export default function ProgramsPage() {
 
   const programOptions = ['All Programs', ...programs.map((p) => p.programName)];
 
-  const filteredPrograms = selectedProgram === 'All Programs' ? programs : programs.filter((p) => p.programName === selectedProgram);
+  const filteredPrograms =
+    selectedProgram === 'All Programs'
+      ? programs
+      : programs.filter((p) => p.programName === selectedProgram);
 
   const handleProgramChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedProgram(e.target.value);
@@ -77,58 +79,48 @@ export default function ProgramsPage() {
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
               {filteredPrograms.length > 0 ? (
-                filteredPrograms.map((program) => {
-                  return (
-                    <React.Fragment key={program.id}>
-                      <tr className="hover:bg-gray-50">
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900" rowSpan={program.suppliers.length || 1}>
-                          {program.therapeuticArea}
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900" rowSpan={program.suppliers.length || 1}>
-                          {program.programName}
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap" rowSpan={program.suppliers.length || 1}>
-                          <span
-                            className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
-                              program.status === 'Active'
-                                ? 'bg-green-100 text-green-800'
-                                : program.status === 'Inactive'
-                                ? 'bg-red-100 text-red-800'
-                                : 'bg-blue-100 text-blue-800'
-                            }`}
-                          >
-                            {program.status}
-                          </span>
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap" rowSpan={program.suppliers.length || 1}>
-                          <span
-                            className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
-                              program.criticality === 'High'
-                                ? 'bg-red-100 text-red-800'
-                                : program.criticality === 'Low'
-                                ? 'bg-green-100 text-green-800'
-                                : 'bg-yellow-100 text-yellow-800'
-                            }`}
-                          >
-                            {program.criticality}
-                          </span>
-                        </td>
-                        {program.suppliers.length > 0 && (
-                          <>
-                            <td className="px-6 py-2 text-sm text-gray-500">{program.suppliers[0].name}</td>
-                            <td className="px-6 py-2 text-sm text-gray-500">{program.suppliers[0].materials.join(', ')}</td>
-                          </>
-                        )}
+                filteredPrograms.map((program) => (
+                  <React.Fragment key={program.id}>
+                    <tr className="hover:bg-gray-50">
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900" rowSpan={program.suppliers.length || 1}>
+                        {program.therapeuticArea}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900" rowSpan={program.suppliers.length || 1}>
+                        {program.programName}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap" rowSpan={program.suppliers.length || 1}>
+                        {program.status === 'Active' && <CheckCircle className="w-5 h-5 text-green-600" aria-label="Active" />}
+                        {program.status === 'Inactive' && <Flame className="w-5 h-5 text-red-600" aria-label="Inactive" />}
+                        {program.status === 'Completed' && <AlertTriangle className="w-5 h-5 text-yellow-600" aria-label="Completed" />}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap" rowSpan={program.suppliers.length || 1}>
+                        <span
+                          className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
+                            program.criticality === 'High'
+                              ? 'bg-red-100 text-red-800'
+                              : program.criticality === 'Low'
+                              ? 'bg-green-100 text-green-800'
+                              : 'bg-yellow-100 text-yellow-800'
+                          }`}
+                        >
+                          {program.criticality}
+                        </span>
+                      </td>
+                      {program.suppliers.length > 0 && (
+                        <>
+                          <td className="px-6 py-2 text-sm text-gray-500">{program.suppliers[0].name}</td>
+                          <td className="px-6 py-2 text-sm text-gray-500">{program.suppliers[0].materials.join(', ')}</td>
+                        </>
+                      )}
+                    </tr>
+                    {program.suppliers.slice(1).map((supplier, index) => (
+                      <tr key={`${program.id}-supplier-${index}`} className="hover:bg-gray-50 border-t border-gray-200">
+                        <td className="px-6 py-2 text-sm text-gray-500">{supplier.name}</td>
+                        <td className="px-6 py-2 text-sm text-gray-500">{supplier.materials.join(', ')}</td>
                       </tr>
-                      {program.suppliers.slice(1).map((supplier, index) => (
-                        <tr key={`${program.id}-supplier-${index}`} className="hover:bg-gray-50 border-t border-gray-200">
-                          <td className="px-6 py-2 text-sm text-gray-500">{supplier.name}</td>
-                          <td className="px-6 py-2 text-sm text-gray-500">{supplier.materials.join(', ')}</td>
-                        </tr>
-                      ))}
-                    </React.Fragment>
-                  );
-                })
+                    ))}
+                  </React.Fragment>
+                ))
               ) : (
                 <tr>
                   <td colSpan={6} className="px-6 py-8 text-center text-sm text-gray-500">
