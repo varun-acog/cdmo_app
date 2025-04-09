@@ -6,11 +6,11 @@ export default function HomePage() {
   const getRiskIcon = (risk: string) => {
     switch (risk) {
       case 'High':
-        return <Flame className="text-red-500" title="High Risk" />;
+        return <Flame className="text-red-500" aria-label="High Risk" />;
       case 'Medium':
-        return <AlertTriangle className="text-yellow-500" title="Medium Risk" />;
+        return <AlertTriangle className="text-yellow-500" aria-label="Medium Risk" />;
       case 'Low':
-        return <CheckCircle className="text-green-500" title="Low Risk" />;
+        return <CheckCircle className="text-green-500" aria-label="Low Risk" />;
       default:
         return null;
     }
@@ -19,9 +19,9 @@ export default function HomePage() {
   const getPerformanceIcon = (trend: string) => {
     switch (trend) {
       case 'Up':
-        return <TrendingUp className="text-green-600" title="Improving Performance" />;
+        return <TrendingUp className="text-green-600" aria-label="Improving Performance" />;
       case 'Down':
-        return <TrendingDown className="text-red-600" title="Declining Performance" />;
+        return <TrendingDown className="text-red-600" aria-label="Declining Performance" />;
       default:
         return null;
     }

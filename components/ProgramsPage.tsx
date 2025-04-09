@@ -131,7 +131,7 @@ export default function ProgramsPage() {
                 })
               ) : (
                 <tr>
-                  <td colSpan="6" className="px-6 py-8 text-center text-sm text-gray-500">
+                  <td colSpan={6} className="px-6 py-8 text-center text-sm text-gray-500">
                     No programs found for the selected filter.
                   </td>
                 </tr>
